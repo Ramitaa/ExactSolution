@@ -2,9 +2,13 @@
  * @author Ramitaa Loganathan
  */
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
+import java.util.Random;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -22,16 +26,20 @@ public class ExactSolution {
      * @param args 
      */
     public static void main(String[] args) {
-        
-        // The graph size (no of nodes) and clique size is prompted 
+            
+        //Using user's input 
         int array[] = getUserInput();
-        
-        // A graph is created using the user data
         graph = new Graph(array[0], array[1]);
         
         generateProblemInstance();
+
+        long start = System.nanoTime();
         generateSolution();
-        
+        long finish = System.nanoTime();
+
+
+        System.out.println("Time elapsed: " + (finish-start)/1000000.00 + " seconds");       
+                
     }
     
     //------------------------------------------------------------------------------------------------------
@@ -69,7 +77,7 @@ public class ExactSolution {
         printSpecialLine(50, "-");
         System.out.print("\n                SOLUTION DETAILS\n");
         printSpecialLine(50, "-");
-                
+                        
         //Step 1: Check if graph has minimum edges to form k-clique
         if (!minimumEdgesExists())
             return false;
@@ -81,8 +89,8 @@ public class ExactSolution {
         // Step 3: Remove invalid nodes from graph
         if (!checkIfNodesWithReleventEdgesSuffice())
             return false;
-        // Step 4: Check if remaining nodes are connected to all other nodes in a possible clique
         
+        // Step 4: Check if remaining nodes are connected to all other nodes in a possible clique
         return cliqueExists();
                
     }
@@ -241,8 +249,8 @@ public class ExactSolution {
         
         else
         {                                  
-        System.out.format("Stage 3: Pass. %d node(s) with %d edges are suffient to form a %d-clique.\n", 
-                    newTempList.size(), graph.getCliqueSize()-1, graph.getCliqueSize(), graph.getCliqueSize());       
+            System.out.format("Stage 3: Pass. %d node(s) with %d edges are suffient to form a %d-clique.\n", 
+            newTempList.size(), graph.getCliqueSize()-1, graph.getCliqueSize(), graph.getCliqueSize());       
         return true;
         }
         
@@ -482,4 +490,4 @@ public class ExactSolution {
         }
     }
       
-} 
+}
